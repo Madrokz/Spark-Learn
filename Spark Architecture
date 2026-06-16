@@ -1,0 +1,204 @@
+# Spark Architecture
+
+Spark Architecture म्हणजे Spark मोठा डेटा कसा process करतो याची रचना.
+
+![Image](https://images.openai.com/static-rsc-4/drd-_VQl8FWbgbgpTbDevqmtxkVe7LoH_4piVAhAxRbW0ktJzdNNFocDF2g0DMqfZkk9eYGMmTQa-4fWJr6chCiF6CVv1eug2eq-KjjkGE8malVAG55-PLtHMxyi4kIacrKAZFNAMjfMvdcQKvPI44cCSMTvYHwzvPXrp_W7lQMIXoCJ-zenbSm1vLlYMBmr?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/E-Q0Bd1ANZLyeD8lFmewNTYVSV_xXsRbReEtublsXTxyQjzC9KLOukFGnVnkKXxalkjOPSGJYa4tCtcLBxC1WBkykR-Ka85uXquXu6r_SR_wm-WZ1c_HI_YUz5gkK_WKRNagEJk-2PQLFlSWCuS3JPISRY5UIeRCwTlW4w_m6CcGUqxh5TKfbarZLkLy2Nnz?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/Bd3i5G3lVZUcHQUacCTGilD39inc_gfUW_1l6HeP1noTL2cWYRU71JTZE42m6Nmw2Ftor3PXqVU6lQCBPtgaQsVjDm9-uZjcBsQ-SXVPVIABhNyNXZouAB--Rxu_5Gw_6K7W-cdumKCQgFfp46q51-PPmACQbOjJ-kdA4EdXO_Okxo46WZHIYk_ugMDjNf0I?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/dr58p31B1a4v8qfkVioU54FNe6_yjc6gQC5IVssjiFTtd-ho6eyabFFJhImcdmp1EwIin_utWcdEm-IHkyNcEu3TSxDla2MKbOqli7UoPPcNO96xHB65Kl4efrAvYfSPYU6eGYZrMQoM7P9Nm9ysJ2qUTRTa2N2oAF-BGwTUInD9AUGowq666vOU9_XZwlUz?purpose=fullsize)
+
+## Main Components
+
+### 1. Driver Program (Brain)
+
+* Spark Application सुरू करतो.
+* Code execute करतो.
+* DAG तयार करतो.
+* Tasks Executors ला पाठवतो.
+* Final result collect करतो.
+
+### 2. Cluster Manager
+
+* Resources allocate करतो.
+* Executors सुरू करतो.
+* Examples:
+
+  * Apache Hadoop YARN
+  * Kubernetes
+  * Spark Standalone
+
+### 3. Worker Node
+
+* Machine ज्यावर Executors चालतात.
+
+### 4. Executor
+
+* Actual data processing करतो.
+* Data memory मध्ये ठेवू शकतो.
+* Tasks execute करतो.
+
+## Flow
+
+```text
+User Code
+    |
+ Driver
+    |
+ DAG Creation
+    |
+ Stages
+    |
+ Tasks
+    |
+ Executors
+    |
+ Result
+```
+
+## Example
+
+```python
+df = spark.read.csv("sales.csv")
+
+df.groupBy("city").sum("amount").show()
+```
+
+### काय होते?
+
+1. Driver code वाचतो.
+2. Driver DAG तयार करतो.
+3. Data partitions मध्ये divide होते.
+4. Tasks तयार होतात.
+5. Executors प्रत्येक partition process करतात.
+6. Result Driver कडे परत येतो.
+
+## Important Terms
+
+### Job
+
+Action (`show()`, `count()`, `collect()`) दिल्यावर Job तयार होतो.
+
+### Stage
+
+Job चे छोटे भाग.
+
+### Task
+
+Stage मधील सर्वात छोटा execution unit.
+
+## Interview Answer
+
+> Spark Architecture मध्ये Driver Program, Cluster Manager, Worker Nodes आणि Executors असतात. Driver execution plan (DAG) तयार करतो, Cluster Manager resources allocate करतो, आणि Executors data partitions वर parallel computation करून result Driver ला परत पाठवतात.
+
+हा Spark interview साठी सर्वात महत्त्वाचा topic आहे. यानंतर **DAG, Lazy Evaluation, Partitioning, Repartition vs Coalesce, Data Skew** हे topics शिका.
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>.ENGLISH.>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+# Spark Architecture (English)
+
+**Spark Architecture** is the way **Apache Spark** processes large amounts of data in a distributed environment.
+
+![Image](https://images.openai.com/static-rsc-4/vvqNfeUfKA6dhr_2MK-B-MgPw_d3MpTPxpiyXMW_sIa0RLSI_jx6Kpk_5CcTyXEowbxgT8tVhFpVqf4MPC6QFO5eElNGs_BDNJPoDVtEs5FfbbIQlEpgtrYH_45p6WS2wusPeJ7fR01RPFUhfkOaAeL0UEnFkvmuzBSu9pCb8h63n_MtK4ku8Rtj5By6hnBF?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/8-2V9-bKnotGbU7qhw_w2cAcAqlcl-sL6WMewFkXLb0G76L0SVEyy6SjufYn6wQoxQyd-zSjBhKMxq2KT9ujUhLsVTMFUD929SB1oAF7xjn1Q92_KDeXZyC_kBvmfgadAMnhpoIQDkoKzoKccB65lUKCoask4D1O28u4fgPEpm-xRaOLWN3BV9mvKZrCSAWM?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/I8LLWw-yKuR6caE0WUtpHberz9UtLLkuD_nvudOfN0f-GZGtDqb7yJRNPg6xhp7mhTL1FfDtsNNvwQNtYwmIeO0DY_rzajd72T60phVzsERFc1CsO7_BtFIOAsIIx6DWyuOVpFXiOZpqNScFNfOKr9bgmYk0co942qMOMwZwLp0J5pSG9osyiOhPDvBPeZPs?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/Bd3i5G3lVZUcHQUacCTGilD39inc_gfUW_1l6HeP1noTL2cWYRU71JTZE42m6Nmw2Ftor3PXqVU6lQCBPtgaQsVjDm9-uZjcBsQ-SXVPVIABhNyNXZouAB--Rxu_5Gw_6K7W-cdumKCQgFfp46q51-PPmACQbOjJ-kdA4EdXO_Okxo46WZHIYk_ugMDjNf0I?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/ZrkImdZoBp9ym5KFA3W6evd3Bwe8USYw2u_T4spn_2LRN6Vd4Dy0TsrOidGzV0vVguanrGyC382PFdaxOl54hcDvS1i2wNn0dR0EqighG1Ky4ed6WkKYgVIN9mtNd8rHdQIKwqtKHmcqE6Wd0KinjHBqKBn_6e3L5ob3YR5zPSQ4KAqZ1qp60Xnb_82nOVGX?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/5A0pBbwA3wBN3mdJhOt5cDIo-Fqpp4EJZpg0dbwDch_1pM0eljBmHIoQKxVfKZlkFqOU0rb9Tv-BTobPaLimkFKGqsVLPS1mw_bbtEK6jXTVKNnIHLWd-e8K3mxkLED2_Ys-i-Gay9PYxB5fqudHqIYN7YfbMrO1_71z3vULjXi95EsNlyLq83GpdMcOvUxp?purpose=fullsize)
+
+## Main Components
+
+### 1. Driver Program
+
+The Driver is the **brain of Spark**.
+
+Responsibilities:
+
+* Runs your Spark application.
+* Creates the execution plan (DAG).
+* Divides work into stages and tasks.
+* Sends tasks to Executors.
+* Collects the final results.
+
+### 2. Cluster Manager
+
+The Cluster Manager allocates resources and manages worker nodes.
+
+Examples:
+
+* Apache Hadoop YARN
+* Kubernetes
+* Spark Standalone
+
+### 3. Worker Node
+
+A worker node is a machine in the cluster where Executors run.
+
+### 4. Executor
+
+Executors perform the actual data processing.
+
+Responsibilities:
+
+* Execute tasks assigned by the Driver.
+* Store data in memory.
+* Return results to the Driver.
+
+---
+
+## How Spark Works
+
+Suppose you run:
+
+```python
+df = spark.read.csv("sales.csv")
+df.groupBy("city").sum("amount").show()
+```
+
+### Execution Flow
+
+1. Driver receives the code.
+2. Driver creates a DAG (execution plan).
+3. Data is divided into partitions.
+4. Job is split into stages.
+5. Stages are split into tasks.
+6. Tasks are sent to Executors.
+7. Executors process data in parallel.
+8. Results are returned to the Driver.
+
+---
+
+## Important Terms
+
+### Job
+
+A Job is created when an Action is called.
+
+Examples:
+
+* `show()`
+* `count()`
+* `collect()`
+
+### Stage
+
+A Job is divided into one or more Stages.
+
+### Task
+
+A Task is the smallest unit of work executed by an Executor.
+
+---
+
+## Interview Answer
+
+> Apache Spark follows a master-worker architecture. The Driver Program creates the execution plan (DAG), the Cluster Manager allocates resources, and Executors running on Worker Nodes process data partitions in parallel. The results are then returned to the Driver.
+
+### One-Line Definition
+
+> Spark Architecture consists of Driver, Cluster Manager, Worker Nodes, and Executors working together to process large datasets in parallel.
