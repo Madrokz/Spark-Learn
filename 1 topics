@@ -1,0 +1,103 @@
+Since you already have 4 years of database experience and are moving toward Data Engineering, focus on these **Spark Core topics**:
+
+### 1. Spark Architecture ⭐
+
+* Driver
+* Executor
+* Cluster Manager
+* Worker Nodes
+* Spark Application Flow
+
+### 2. RDD Basics
+
+* What is RDD?
+* Transformations (`map`, `filter`, `flatMap`)
+* Actions (`count`, `collect`, `reduce`)
+* Lazy Evaluation
+
+### 3. DataFrames & Datasets ⭐⭐⭐
+
+* Reading CSV, JSON, Parquet
+* `select`, `filter`, `withColumn`
+* `groupBy`, `agg`
+* Joins
+* Window Functions
+
+### 4. DAG (Directed Acyclic Graph) ⭐⭐⭐
+
+* How Spark creates execution plans
+* Stages
+* Tasks
+* Jobs
+
+### 5. Partitioning ⭐⭐⭐
+
+* Repartition
+* Coalesce
+* Data Skew
+* Shuffle Operations
+
+### 6. Memory Management ⭐⭐
+
+* Execution Memory
+* Storage Memory
+* Cache
+* Persist
+
+### 7. Spark SQL ⭐⭐⭐
+
+* Temporary Views
+* SQL Queries
+* Catalyst Optimizer
+* Tungsten Engine
+
+### 8. Performance Tuning ⭐⭐⭐
+
+* Cache vs Persist
+* Broadcast Join
+* Partition Optimization
+* Avoiding Shuffles
+
+### 9. File Formats ⭐⭐⭐
+
+* CSV
+* JSON
+* Parquet
+* Delta Lake
+
+### 10. Delta Lake ⭐⭐⭐
+
+* ACID Transactions
+* Time Travel
+* Merge
+* Upsert
+* Optimize
+* Vacuum
+
+### Most Asked Interview Questions
+
+1. Difference between RDD and DataFrame?
+2. What is Lazy Evaluation?
+3. What is DAG?
+4. What is Data Skew?
+5. Repartition vs Coalesce?
+6. Cache vs Persist?
+7. Narrow vs Wide Transformation?
+8. Broadcast Join?
+9. Why Parquet is preferred?
+10. How does Spark handle 100 GB file?
+
+### For Data Engineer Interviews
+
+Priority order:
+
+1. Spark Architecture
+2. DataFrames
+3. DAG
+4. Partitioning
+5. Performance Tuning
+6. Delta Lake
+7. Spark SQL
+8. Memory Management
+
+If you learn these 8 topics with hands-on practice in Databricks, you will cover around **80–90% of Spark questions asked in Data Engineer interviews**.
