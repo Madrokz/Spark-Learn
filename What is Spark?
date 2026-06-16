@@ -1,0 +1,80 @@
+### What is Spark? (Simple Explanation)
+
+**Apache Spark** is a **Big Data Processing Framework** used to process huge amounts of data very fast.
+
+Think of Spark as a **super-fast engine** that can process GBs or TBs of data across multiple machines in parallel.
+
+### Example
+
+Suppose you have a CSV file with **100 GB sales data**.
+
+Without Spark:
+
+* One computer processes all data.
+* Takes a long time.
+
+With Spark:
+
+* Data is divided into partitions.
+* Multiple Executors process partitions simultaneously.
+* Results are combined by the Driver.
+* Processing becomes much faster.
+
+### Spark Architecture
+
+![Image](https://images.openai.com/static-rsc-4/drd-_VQl8FWbgbgpTbDevqmtxkVe7LoH_4piVAhAxRbW0ktJzdNNFocDF2g0DMqfZkk9eYGMmTQa-4fWJr6chCiF6CVv1eug2eq-KjjkGE8malVAG55-PLtHMxyi4kIacrKAZFNAMjfMvdcQKvPI44cCSMTvYHwzvPXrp_W7lQMIXoCJ-zenbSm1vLlYMBmr?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/3qlXETvbjjdjOmDJp-Xa5YHTGl1E2bpCglglFlzgTWd4G8v-S5EgtOsgSY8dwi-hMkQIRYRijoXuaRnQBoNp_-7tjt1ftofmtO76pUOPEvTgNrGzyX0PJKc9eq0JGfCHP5_zfvfJpSmc1NWMA4TsPie_GGrAF2MIh-efgn7oq2qZQjEozZn30pHv8VIKwd4G?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/Fr-63vVg00wtVIAurbZP-wCi3kbldtymHD0yzgJvJdpKO8pwMQpcJNz7NRJRcgQ3k2T4FU73YIAPMzprmatIcVjRGMnQUQvJi9vNegRJPRI90rwU32M05FzDDreOBkJ7dwR8ogBBMpU8sXCkZWxE0Qe3OtrRZiYJXIetLA1QPrRuAwNN7Z33Cq6gGtmQazwn?purpose=fullsize)
+
+![Image](https://images.openai.com/static-rsc-4/wsxVrLYScZetin1C0s6Yq-pSYbgbZ53t5PcfA2_YZqg3Ic4h15WF7mFLxfsA-eAoW86misdQ_PL5QDBrIsX4ZtQ77yPNbiG2t_2toXCT2Pb353tJ08XWGVn0aG4EzAxbL2rXHycjTSy6s73LvOoRB7s8Bwhxni3fxKirX02J0hzzJAeyfujtjBGJYS8QCzfZ?purpose=fullsize)
+
+**Driver**
+
+* Brain of Spark.
+* Creates jobs and tasks.
+
+**Executors**
+
+* Workers that process data.
+
+**Cluster Manager**
+
+* Allocates resources.
+
+### Spark Workflow
+
+1. Read data
+2. Create DataFrame
+3. Apply transformations (`filter`, `join`, `groupBy`)
+4. Spark creates DAG
+5. Executors process data
+6. Return result
+
+### Example Code
+
+```python
+df = spark.read.csv("sales.csv", header=True)
+
+df.groupBy("city").sum("amount").show()
+```
+
+Here:
+
+* Driver creates the execution plan.
+* Executors process data partitions.
+* Result is returned to the Driver.
+
+### Why Data Engineers Use Spark?
+
+* Handles Big Data (GBs/TBs/PBs)
+* Distributed Processing
+* Fast In-Memory Computation
+* Supports SQL
+* Works with Data Lakes
+* Used in Databricks, Azure, AWS, GCP
+
+### Interview Answer (2 Lines)
+
+> Apache Spark is an open-source distributed data processing framework used for large-scale data processing. It distributes data across multiple executors and processes it in parallel, making it much faster than traditional systems.
