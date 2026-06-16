@@ -1,0 +1,102 @@
+# What is RDD in Spark?
+
+**RDD (Resilient Distributed Dataset)** is the fundamental data structure in Apache Spark.
+
+It is:
+
+* **Resilient** → Can recover data if a node fails.
+* **Distributed** → Data is distributed across multiple machines.
+* **Dataset** → Collection of data records.
+
+## Simple Example
+
+Suppose you have:
+
+```text
+10
+20
+30
+40
+50
+```
+
+Spark can split this data into partitions:
+
+```text
+Partition 1: 10, 20
+Partition 2: 30, 40
+Partition 3: 50
+```
+
+Each partition is processed by a different Executor in parallel.
+
+## Creating an RDD
+
+```python
+rdd = spark.sparkContext.parallelize([10,20,30,40,50])
+```
+
+## Transformations
+
+Transformations create a new RDD.
+
+```python
+rdd2 = rdd.map(lambda x: x * 2)
+```
+
+Output:
+
+```text
+20
+40
+60
+80
+100
+```
+
+Common transformations:
+
+* `map()`
+* `filter()`
+* `flatMap()`
+* `distinct()`
+
+## Actions
+
+Actions trigger execution and return results.
+
+```python
+rdd.count()
+rdd.collect()
+rdd.first()
+```
+
+## Why is RDD called Resilient?
+
+Spark stores the lineage (history) of transformations.
+
+Example:
+
+```python
+rdd1 -> map() -> filter() -> result
+```
+
+If a partition is lost, Spark can recreate it using the lineage instead of reloading all data.
+
+## RDD vs DataFrame
+
+| RDD             | DataFrame             |
+| --------------- | --------------------- |
+| Low-level API   | High-level API        |
+| More coding     | Less coding           |
+| No optimization | Catalyst optimization |
+| Slower          | Faster                |
+| Type-safe       | Schema-based          |
+
+## Interview Answer
+
+> RDD (Resilient Distributed Dataset) is Spark's fundamental distributed data structure. It stores data across multiple partitions and allows parallel processing. RDDs are fault-tolerant because Spark can rebuild lost data using lineage information.
+
+### Important Interview Point
+
+In modern Data Engineering projects, **DataFrames are used much more than RDDs** because they are faster and optimized. However, you should understand RDD concepts because many Spark interview questions are based on them.
