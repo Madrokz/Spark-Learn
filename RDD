@@ -100,3 +100,70 @@ If a partition is lost, Spark can recreate it using the lineage instead of reloa
 ### Important Interview Point
 
 In modern Data Engineering projects, **DataFrames are used much more than RDDs** because they are faster and optimized. However, you should understand RDD concepts because many Spark interview questions are based on them.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Lineage >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+# What is Lineage in Spark?
+
+**Lineage** is the history of all transformations performed on an RDD or DataFrame.
+
+Spark keeps track of how data was created instead of storing multiple copies.
+
+### Example
+
+```python
+rdd1 = sc.parallelize([1,2,3,4,5])
+
+rdd2 = rdd1.map(lambda x: x * 2)
+
+rdd3 = rdd2.filter(lambda x: x > 5)
+
+rdd3.collect()
+```
+
+### Lineage Graph
+
+```text
+RDD1
+  |
+ map(x*2)
+  |
+RDD2
+  |
+ filter(x>5)
+  |
+RDD3
+```
+
+Spark remembers:
+
+* RDD3 came from RDD2
+* RDD2 came from RDD1
+
+This history is called **Lineage**.
+
+## Why is Lineage Important?
+
+### Fault Tolerance
+
+Suppose an Executor crashes and loses a partition of RDD3.
+
+Spark does **not** reload all data.
+
+Instead, it uses the lineage:
+
+```text
+RDD1 → map() → filter() → RDD3
+```
+
+and recomputes only the lost partition.
+
+This is why RDD is called **Resilient**.
+
+## Interview Answer
+
+> Lineage is the record of all transformations applied to an RDD or DataFrame. Spark uses lineage information to rebuild lost partitions in case of failure, providing fault tolerance without replicating the entire dataset.
+
+### One-Line Answer
+
+> Lineage = Spark's execution history used to recover lost data partitions.
