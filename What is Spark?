@@ -78,3 +78,60 @@ Here:
 ### Interview Answer (2 Lines)
 
 > Apache Spark is an open-source distributed data processing framework used for large-scale data processing. It distributes data across multiple executors and processes it in parallel, making it much faster than traditional systems.
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+### What is Computation?
+
+**Computation** means performing calculations or processing data to produce a result.
+
+### Simple Example
+
+```text
+10 + 20 = 30
+```
+
+Here, the calculation `10 + 20` is a computation.
+
+### In Spark
+
+Suppose you have sales data:
+
+| City   | Amount |
+| ------ | ------ |
+| Pune   | 100    |
+| Pune   | 200    |
+| Mumbai | 300    |
+
+Query:
+
+```python
+df.groupBy("city").sum("amount")
+```
+
+Spark performs computations:
+
+* Groups records by city
+* Adds amounts
+* Returns the result
+
+Output:
+
+| City   | Total |
+| ------ | ----- |
+| Pune   | 300   |
+| Mumbai | 300   |
+
+### Data Engineer Perspective
+
+Common computations:
+
+* Filtering data
+* Aggregations (`SUM`, `COUNT`, `AVG`)
+* Joins
+* Sorting
+* Transforming columns
+
+### Interview Answer
+
+> Computation is the process of performing calculations or data processing operations to generate a result. In Spark, computations are distributed across executors and performed in parallel on large datasets.
