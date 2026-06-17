@@ -1,0 +1,114 @@
+# What is Lazy Evaluation in Spark?
+
+**Lazy Evaluation** means Spark does **not execute transformations immediately**.
+
+Instead, Spark records the transformations and waits until an **Action** is called.
+
+## Example
+
+```python
+df = spark.read.csv("sales.csv")
+
+df1 = df.filter(df.amount > 100)
+
+df2 = df1.groupBy("city").sum("amount")
+```
+
+Up to this point, Spark **does not execute anything**.
+
+It only remembers:
+
+1. Read CSV
+2. Filter data
+3. Group by city
+
+When you run:
+
+```python
+df2.show()
+```
+
+Spark starts execution.
+
+## Why Lazy Evaluation?
+
+### 1. Optimization
+
+Spark can optimize the entire workflow before execution using the DAG and Catalyst Optimizer.
+
+### 2. Reduced Processing
+
+Spark avoids unnecessary computations.
+
+Example:
+
+```python
+df.filter(df.amount > 100)
+```
+
+If you never call an Action (`show()`, `count()`, `collect()`), Spark never processes the data.
+
+## Transformations vs Actions
+
+### Transformations (Lazy)
+
+```python
+filter()
+map()
+select()
+join()
+groupBy()
+withColumn()
+```
+
+These only build the execution plan.
+
+### Actions (Trigger Execution)
+
+```python
+show()
+count()
+collect()
+first()
+write()
+```
+
+These trigger actual execution.
+
+## Flow
+
+```text
+Read Data
+   |
+Filter
+   |
+GroupBy
+   |
+(No Execution Yet)
+   |
+show()
+   |
+Execution Starts
+```
+
+## Real Interview Example
+
+```python
+df = spark.read.csv("sales.csv")
+
+df1 = df.filter(df.amount > 100)
+
+df2 = df1.select("city","amount")
+```
+
+**Question:** Has Spark processed the data?
+
+**Answer:** No. These are transformations. Spark only builds the DAG. Processing starts when an action such as `show()` or `count()` is called.
+
+## Interview Answer
+
+> Lazy Evaluation is a Spark optimization technique where transformations are not executed immediately. Spark records the transformations, builds a DAG, and executes them only when an action is triggered. This allows Spark to optimize the execution plan and improve performance.
+
+### One-Line Answer
+
+> Lazy Evaluation means Spark delays execution until an action is called, allowing it to optimize the entire workflow before processing data.
