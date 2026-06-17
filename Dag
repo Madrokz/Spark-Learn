@@ -1,0 +1,96 @@
+# What is DAG in Spark?
+
+**DAG** stands for **Directed Acyclic Graph**.
+
+It is the execution plan that Spark creates before processing data.
+
+### Meaning of DAG
+
+* **Directed** → Operations have a direction (start → end).
+* **Acyclic** → No loops or cycles.
+* **Graph** → Connected operations.
+
+## Example
+
+```python
+df = spark.read.csv("sales.csv")
+
+df_filtered = df.filter(df.amount > 100)
+
+df_grouped = df_filtered.groupBy("city").sum("amount")
+
+df_grouped.show()
+```
+
+### DAG Created by Spark
+
+```text
+Read CSV
+    |
+ Filter
+    |
+ GroupBy
+    |
+ Show
+```
+
+Spark analyzes all transformations and builds this DAG before execution.
+
+## Why Does Spark Use DAG?
+
+### 1. Optimization
+
+Spark can optimize the execution plan before running it.
+
+### 2. Parallel Processing
+
+Spark identifies which tasks can run simultaneously on different Executors.
+
+### 3. Fault Tolerance
+
+If a task fails, Spark can rerun only the failed task.
+
+## DAG, Job, Stage, and Task
+
+```text
+Action (show/count/collect)
+          |
+         Job
+          |
+      Stages
+          |
+       Tasks
+```
+
+### Example
+
+```python
+df.filter(col("amount") > 100) \
+  .groupBy("city") \
+  .sum() \
+  .show()
+```
+
+* `show()` → creates a Job
+* Job → divided into Stages
+* Stages → divided into Tasks
+* Tasks → executed by Executors
+
+## DAG vs Lineage
+
+* **Lineage** = History of transformations.
+* **DAG** = Execution plan built from those transformations.
+
+You can think of it as:
+
+```text
+Lineage → DAG → Stages → Tasks → Execution
+```
+
+## Interview Answer
+
+> DAG (Directed Acyclic Graph) is the logical execution plan created by Spark. It represents the sequence of transformations on data. Spark uses the DAG to optimize execution, divide work into stages and tasks, and process data efficiently in parallel.
+
+### One-Line Answer
+
+> DAG is Spark's execution blueprint that defines how data transformations will be executed across the cluster.
